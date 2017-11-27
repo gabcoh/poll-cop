@@ -1,0 +1,10 @@
+#!/bin/bash
+main () {
+    PID=$1
+    NAME=`ps -o command= -c $PID`
+    while s=`ps -o state= -p $PID` && [[ "$s" && "$s" != 'Z' ]]; do
+        sleep 1
+    done
+    reattach-to-user-namespace osascript -e "display notification \"$NAME has completed execution\" with title \"$NAME has completed execution\""
+}
+main $* &
